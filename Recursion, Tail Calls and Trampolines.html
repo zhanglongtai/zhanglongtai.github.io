@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)http://www.datchley.name/recursion-tail-calls-and-trampolines/ -->
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="http://gmpg.org/xfn/11" rel="profile">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <title>Recursion, Tail Calls and Trampolines</title>
+    <meta name="description" content="Learn about recursion in Javascript, tail calls, trampolines and when to use them.">
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" href="/assets/css/poole.css?v=c17870d40a">
+    <link rel="stylesheet" href="/assets/css/syntax.css?v=c17870d40a">
+    <link rel="stylesheet" href="/assets/css/lanyon.css?v=c17870d40a">
+    <link rel="stylesheet" href="/assets/css/custom.css?v=c17870d40a"> -->
+    <link rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/css">
+    <link rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/devicons.min.css"> 
+    <link rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/default.min.css">
+    <link rel="stylesheet" href="https://rawgit.com/noelboss/featherlight/master/src/featherlight.css">
+	<link rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/theme.min.css">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.datchley.name/assets/apple-touch-icon-precomposed.png?v=c17870d40a">
+    <link rel="shortcut icon" href="http://www.datchley.name/favicon.ico">
+    <link rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/font-awesome.min.css">
+
+    <script type="text/javascript" async="" src="./Recursion, Tail Calls and Trampolines_files/ga.js.下载"></script><script src="./Recursion, Tail Calls and Trampolines_files/ca-pub-6516524660910307.js.下载"></script><script id="twitter-wjs" src="http://platform.twitter.com/widgets.js"></script><script async="" src="./Recursion, Tail Calls and Trampolines_files/adsbygoogle.js.下载"></script>
+    <link rel="canonical" href="http://www.datchley.name/recursion-tail-calls-and-trampolines/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="http://www.datchley.name/recursion-tail-calls-and-trampolines/amp/">
+    
+    <meta property="og:site_name" content="Dave Atchley">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Recursion, Tail Calls and Trampolines">
+    <meta property="og:description" content="Learn about recursion in Javascript, tail calls, trampolines and when to use them.">
+    <meta property="og:url" content="http://www.datchley.name/recursion-tail-calls-and-trampolines/">
+    <meta property="article:published_time" content="2015-11-17T03:22:59.000Z">
+    <meta property="article:modified_time" content="2015-11-17T20:57:11.000Z">
+    <meta property="article:tag" content="javascript">
+    <meta property="article:tag" content="recursion">
+    <meta property="article:tag" content="es6">
+    <meta property="article:tag" content="tail call optimization">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Recursion, Tail Calls and Trampolines">
+    <meta name="twitter:description" content="Learn about recursion in Javascript, tail calls, trampolines and when to use them.">
+    <meta name="twitter:url" content="http://www.datchley.name/recursion-tail-calls-and-trampolines/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Dave Atchley">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="javascript, recursion, es6, tail call optimization">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Dave Atchley",
+        "logo": "http://www.datchley.name/content/images/2015/05/datchley-avatar-image-square.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Dave Atchley",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://www.datchley.name/content/images/2015/05/datchley-avatar-image-square-2.jpg",
+            "width": 549,
+            "height": 560
+        },
+        "url": "http://www.datchley.name/author/dave/",
+        "sameAs": []
+    },
+    "headline": "Recursion, Tail Calls and Trampolines",
+    "url": "http://www.datchley.name/recursion-tail-calls-and-trampolines/",
+    "datePublished": "2015-11-17T03:22:59.000Z",
+    "dateModified": "2015-11-17T20:57:11.000Z",
+    "keywords": "javascript, recursion, es6, tail call optimization",
+    "description": "Learn about recursion in Javascript, tail calls, trampolines and when to use them.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://www.datchley.name"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="Dave Atchley" href="http://www.datchley.name/rss/">
+    <meta name="google-site-verification" content="afQyfjjyQQ9SO_6nie7sbcZcsydbhDD34jnjozXsOfA">
+<script src="./Recursion, Tail Calls and Trampolines_files/saved_resource" data-sumo-site-id="8f833ba98b35a0107641c837bc3a68d9dd7481f213a0a7676bade28c97bc09da" async="async"></script>
+  <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="674d3d92-3a9f-4620-99f6-ff856d18423d/service" src="./Recursion, Tail Calls and Trampolines_files/service.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/service" src="./Recursion, Tail Calls and Trampolines_files/service.js(1).下载"></script><style>@-webkit-keyframes insQ_100 {  from {  outline: 1px solid transparent  } to {  outline: 0px solid transparent }  }
+#menufication-top { animation-duration: 0.001s; animation-name: insQ_100; -webkit-animation-duration: 0.001s; -webkit-animation-name: insQ_100;  } </style><link type="text/css" rel="stylesheet" href="./Recursion, Tail Calls and Trampolines_files/sumome-share-client.css"><script type="text/javascript" async="" src="http://datchley-name.disqus.com/embed.js"></script></head>
+
+  <body class="post-template tag-javascript tag-recursion tag-es6 tag-tail-call-optimization theme-base-0d sidebar-overlay" style="">
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+ styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <div class="sidebar-backdrop">&nbsp;</div>
+    <div class="nav-header-image">
+        <div class="header-logo-wrap"> 
+            <span class="header-logo">
+                <img src="./Recursion, Tail Calls and Trampolines_files/datchley-avatar-image-square.jpg" class="profileimage" alt="Dave Atchley">
+            </span>
+        </div>
+    </div>
+    <p style="text-align: center">Musings of a caffeinated coder</p>
+    <div class="social-links-wrapper">
+        <ul class="social-links">
+            <li><a href="http://facebook.com/tuxz0r"><i class="fa fa-facebook fa-inverse"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/tuxz0r"><i class="fa fa-linkedin fa-inverse"></i></a></li>
+            <li><a href="http://twitter.com/tuxz0r"><i class="fa fa-twitter fa-inverse"></i></a></li>
+            <li><a href="http://github.com/datchley"><i class="fa fa-github-alt fa-inverse"></i> </a></li>
+            <li><a href="https://careers.stackoverflow.com/datchley"><i class="fa fa-stack-overflow fa-inverse"></i> </a></li>
+        </ul>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+      <a class="sidebar-nav-item sidebar-nav-home " href="http://www.datchley.name/">Home</a>
+      <a class="sidebar-nav-item sidebar-nav-about-me " href="http://www.datchley.name/about-me/">About Me</a>
+      <a class="sidebar-nav-item sidebar-nav-projects " href="http://www.datchley.name/projects-sidebars/">Projects</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>© 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <div class="header-logo-wrap logo-small">
+                <span class="header-logo logo-small">
+                    <img src="./Recursion, Tail Calls and Trampolines_files/datchley-avatar-image-square.jpg" class="profileimage" alt="Dave Atchley">
+                </span>
+            </div>
+            <a href="http://www.datchley.name/" title="Home">Dave Atchley</a>
+            <small>Musings of a caffeinated coder</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        
+<article class="post tag-javascript tag-recursion tag-es6 tag-tail-call-optimization">
+
+  <header class="post-header">
+      <h1 class="post-title">Recursion, Tail Calls and Trampolines</h1>
+      <section class="post-meta">
+          <time class="post-date" datetime="2015-11-17">November 17, 2015</time>. By <a href="http://www.datchley.name/author/dave/">Dave Atchley</a>.
+          <a href="https://twitter.com/tuxz0r" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @tuxz0r</a>
+          <!-- Twitter Follow Button -->
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            <ul class="share-buttons"> 
+            <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdatchley.name&amp;t=" target="_blank" title="Share on Facebook" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Top&#39;,&#39;Facebook&#39;]); window.open(&#39;https://www.facebook.com/sharer/sharer.php?u=&#39; + encodeURIComponent(document.URL) + &#39;&amp;t=&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-facebook-square fa-2x"></i></a></li>
+            <li><a class="twitter" href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fdatchley.name&amp;text=:%20http%3A%2F%2Fdatchley.name&amp;via=tuxz0r" target="_blank" title="Tweet" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Top&#39;,&#39;Twitter&#39;]);window.open(&#39;https://twitter.com/intent/tweet?text=&#39; + encodeURIComponent(document.title) + &#39;:%20&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-twitter-square fa-2x"></i></a></li>
+            <li><a class="googleplus" href="https://plus.google.com/share?url=http%3A%2F%2Fdatchley.name" target="_blank" title="Share on Google+" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Top&#39;,&#39;GooglePlus&#39;]);window.open(&#39;https://plus.google.com/share?url=&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+            <li><a class="reddit" href="http://www.reddit.com/submit?url=http%3A%2F%2Fdatchley.name&amp;title=" target="_blank" title="Submit to Reddit" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Top&#39;,&#39;Reddit&#39;]);window.open(&#39;http://www.reddit.com/submit?url=&#39; + encodeURIComponent(document.URL) + &#39;&amp;title=&#39; +  encodeURIComponent(document.title)); return false;"><i class="fa fa-reddit-square fa-2x"></i></a></li>
+            <li><a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fdatchley.name&amp;title=&amp;summary=&amp;source=http%3A%2F%2Fdatchley.name" target="_blank" title="Share on LinkedIn" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Top&#39;,&#39;LinkedIn&#39;]);window.open(&#39;http://www.linkedin.com/shareArticle?mini=true&amp;url=&#39; + encodeURIComponent(document.URL) + &#39;&amp;title=&#39; +  encodeURIComponent(document.title)); return false;"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
+            </ul>
+      </section>
+  </header>
+
+    <!-- post-header -->
+    <ins class="adsbygoogle" style="display: block; height: 60px;" data-ad-client="ca-pub-6516524660910307" data-ad-slot="2523353470" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:720px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:720px;background-color:transparent"><iframe width="720" height="60" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" src="./Recursion, Tail Calls and Trampolines_files/saved_resource.html"></iframe></ins></ins></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+  <section class="post-content">
+    <p>Recursion is a control flow construct. It allows us to have a function call itself and repeat an operation until it arrives at a result. Many functional languages are built around recursion and lazy evaluation. While Javascript has many functional aspects as a language, it is currently not built to handle recursion in a safe and effective manner.</p>
+
+<p>Does this mean we shouldn't use recursion in our programs? No, not necessarily.  Some functions become much more readable, maintainable and succinct when written in recursive form. Some mathematical functions and algorithms fall into this category.</p>
+
+<blockquote>
+  <p>"Programs must be written for people to read, and only incidentally for machines to execute." <small>Abelson &amp; Sussman, Structure and Interpretation of Computer Programs</small></p>
+</blockquote>
+
+<p>But this isn't always the case; and it may be better to use iteration or some other mechanism to repeat an operation such as Promises or the browser's own event loop.</p>
+
+<p>With all that in mind, however, let's take a look at recursion in Javascript in various forms to see how and why it works.</p>
+
+<h2 id="functionsandthestack">Functions and the Stack</h2>
+
+<p>Before we can get into the topic at hand, we must have a basic understanding of Javascript's execution model - specifically, the execution or call stack.</p>
+
+<p>Javascript is single threaded, which means that only one task can be run at any given time. When the Javascript interpreter on the page starts executing code it is running in an environment that is referred to as the Global Execution Context. Various language features will trigger the creation of a new execution context (<em>functions, eval, let blocks, closures, etc.</em>).</p>
+
+<p>So what is available to our code in each of these execution contexts? The execution context for the currently running code is basically the accessible scope (<em>variables and functions</em>) for that code. I've covered <a href="http://www.datchley.name/basic-scope/">scoping in Javascript</a> previously; but here is an example:</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/js-es5-scope-1-.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/js-es5-scope-1-.png" alt=""></a></p>
+
+<p>Here, when the two functions <code>foo</code> and <code>bar</code> are encountered, the interpreter creates a new execution context. These contexts are created on a stack data structure, meaning that if a new context is created during the currently running code, this new execution context is created and stacked on top of the current context.</p>
+
+<p>Here is a simplified execution stack for the above code. Keep in mind that because of the scope chain, execution contexts will be able to access variables and functions delared in any parent (<em>previous</em>) scope.</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Execution-Stack---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Execution-Stack---JS.png" alt=""></a></p>
+
+<p>The important thing to note is that nested function calls add to the stack. When the code in a given context is finished executing, that stack entry is destroyed and control is returned to the executable code from the previous stack execution context.</p>
+
+<p>Armed with this simple understanding of Javascript's execution contexts and stacks, let's move ahead with an example function to show how repeating a task works from simple iteration through various uses of recursion.</p>
+
+<h2 id="iterating">Iterating</h2>
+
+<p>We'll try to be original in this post and not use the tried and true fibonacci sequence as our recursion example; instead, opting to create a simple function that will generate an array of integers in a range (<em>inclusively</em>) if given a starting number and an ending number.</p>
+
+<p>Our function, <code>range</code>, simply iterates using a <code>while</code> loop to produce the given range and returns the array.</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-comment">// Generate an array of integers in the range s -&gt; e.</span>
+<span class="hljs-comment">// Iterative implementation</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">s, e</span>) </span>{  
+    <span class="hljs-keyword">var</span> res = [];
+
+    <span class="hljs-keyword">while</span> (s != e) {
+        res.push(s);
+        s &lt; e ? s++ : s--;
+    }
+    res.push(s); 
+    <span class="hljs-keyword">return</span> res;
+}
+
+range(<span class="hljs-number">1</span>,<span class="hljs-number">4</span>);  <span class="hljs-comment">// [1,2,3,4]  </span>
+range(-<span class="hljs-number">5</span>,<span class="hljs-number">1</span>); <span class="hljs-comment">// [-5,-4,-3,-2,-1,0,1]  </span>
+</code></pre>
+
+<p>The function is simple and performs our operation effectively. How does this look on the execution stack?</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Single-Function--Iterative-Stack---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Single-Function--Iterative-Stack---JS.png" alt=""></a></p>
+
+<p>The <code>range</code> function is called within the Global Execution Context and triggers the creation of a new execution context on the stack. The range function performs its operations and returns the resulting array. This destroys the function's execution context and returns the result and control back to the code in the global context.</p>
+
+<p>This isn't a function you would want to convert into a recursive style, as the performance and safety would seriously degrade. However, for the purposes of this blog post and our discussion, it will suffice, as its implementation and use are clear and simple.</p>
+
+<h2 id="recursion">Recursion</h2>
+
+<p>Moving our <code>range</code> function from iterative to recursive, we can keep our call API the same, taking a starting and ending integer for the range. Since the range we're building is inclusive, we push the starting number onto our <code>res</code> array and will call ourself recursively until we hit the ending integer. The new starting number passed to our self recursive call is incremented or decremented depending on the direction in which we're building the range.</p>
+
+<p>As we get results back from our self recursive calls, we flatten them into our own results before returning using <code>Array#concat</code>.</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-comment">// Generate an array of numbers in a given range.</span>
+<span class="hljs-comment">// Recursive implementation</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">s, e</span>) </span>{  
+  <span class="hljs-keyword">var</span> res = [];
+
+  res.push(s);
+  <span class="hljs-keyword">return</span> s == e ? res : res.concat(range(s&lt;e ? ++s : --s, e));
+}
+
+range(<span class="hljs-number">1</span>,<span class="hljs-number">4</span>); <span class="hljs-comment">// [1,2,3,4]  </span>
+</code></pre>
+
+<p>How does this look on the execution stack?  Each recursive call adds an execution context to the stack until we reach the last, ending integer. Then, the stack begins to unwind as each call returns its results.</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Recursive-Execution-Stack---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Recursive-Execution-Stack---JS.png" alt=""></a></p>
+
+<p>We simply push a number onto our results array and call ourself again for the next number.  The terminal condition that will stop the repeating of our operation is when our start value is equal to the end value of our range. At that point, we're done, and each function on the stack can unwind, concatenating and flattening the results array as they go.</p>
+
+<h2 id="tailcallsrecursion">Tail Calls &amp; Recursion</h2>
+
+<p>In our previous example, the call we made to ourselves was part of an expression, specifically:</p>
+
+<pre class="highlight"><code class="language-javascript hljs">res.concat(range(s&lt;e ? ++s : --s, e))  
+</code></pre>
+
+<p>From an interpreter standpoint this means that we need to retain the current execution context, because we're dependent on the results from our self-recursive call in order to modify our local <code>res</code> array. If we were to instead have our function return just the results of making the self call, rather than require the result of that call to be evaluated in an expression, we open up the possibility of simplifying our execution environment because we no longer have to retain the current execution context of the calling function. </p>
+
+<p>Essentially, if we return the results of a function call (<em>recursive or not</em>) at the end of our function and none of our function's local environment is needed as part of that evaluation, then that function call is said to be in <strong>tail position</strong>.</p>
+
+<p>The reason this is important is because if we write calls in tail position, this can allow for the interpeter to optimize the call by reusing the existing stack frame.  Let's re-write our function to put the recursive call in tail position instead.</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-comment">// Generate an array of numbers in a given range.</span>
+<span class="hljs-comment">// Tail Recursive implementation</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">s, e, res</span>) </span>{  
+  res = res || [];
+  res.push(s);
+  <span class="hljs-keyword">return</span> s == e ? res : range(s&lt;e ? ++s : --s, e, res);
+}
+
+range(<span class="hljs-number">1</span>,<span class="hljs-number">4</span>); <span class="hljs-comment">// [1,2,3,4]  </span>
+</code></pre>
+
+<p>In order to remove any dependencies on our local environment, in this case the <code>res</code> array, we pass our current results into the next call to ourself.  This way, we're passing all the state our function needs to continue processing as it recurses to find a result.  Notice the difference: in the tail recursive version we return either a result value or the result of calling ourself without requiring any local state.</p>
+
+<pre class="highlight"><code class="hljs sql">// Non tail-<span class="hljs-operator"><span class="hljs-keyword">call</span> <span class="hljs-keyword">version</span>
+<span class="hljs-keyword">return</span> s == e ? res : res.<span class="hljs-keyword">concat</span>(range(s&lt;e ? ++s : <span class="hljs-comment">--s, e));  </span>
+</span></code></pre>
+
+<pre class="highlight"><code class="hljs sql">// Tail <span class="hljs-operator"><span class="hljs-keyword">call</span> <span class="hljs-keyword">version</span>
+<span class="hljs-keyword">return</span> s == e ? res : range(s&lt;e ? ++s : <span class="hljs-comment">--s, e, res);  </span>
+</span></code></pre>
+
+<p>Let's see how this looks on the execution stack when run.</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES5---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES5---JS.png" alt=""></a></p>
+
+<p>So, what's going on here?  As each new execution context is added to the stack, the full results array is passed along as well. Our stack is still growing with each nested call but the interpreter isn't reusing the existing stack frame for the execution of the new function. What gives? The reason is that, currently, Javascript isn't making any optimizations for calls in tail position.  </p>
+
+<p>The stack space for a running Javascript program is finite, and so the more nested calls (<em>self-recursive or not</em>) that are made, the larger the stack grows until the process runs out of memory - specifically stack space.  We can see this at play if we try generating very large ranges with our recursive implementation.</p>
+
+<pre class="highlight"><code class="language-javascript hljs">range(<span class="hljs-number">1</span>,<span class="hljs-number">100</span>);  
+<span class="hljs-comment">// =&gt; [1,2,3,4,...,98,99,100]</span>
+ranger(<span class="hljs-number">1</span>,<span class="hljs-number">32768</span>);  
+<span class="hljs-comment">// Uncaught RangeError: Maximum call stack size exceeded </span>
+</code></pre>
+
+<p>In the next version of Javascript, ES6, <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-tail-position-calls">tail call optimization</a> is slated to be supported; but for now, calls in tail position act just like any other nested calls from a stack execution context perspective.</p>
+
+<p>Are there ways around this?  Sure, let's look at a couple of them next.</p>
+
+<h2 id="tailrecursionwithtrampoline">Tail Recursion with Trampoline</h2>
+
+<p>One way to get around the lack of tail call optimization in languages like Javascript is to use a pattern called <em>trampolining</em>. A trampoline is a loop that iteratively invokes <em>thunk</em>-returning functions.  Trampolined functions can be used to implement tail recursive function calls in stack based languages. </p>
+
+<p>So, what is a <em>thunk</em>?  A thunk is essentially a function that wraps a call to another function, along with any parameters it needs, for later execution. A way to emulate lazy evaluation.</p>
+
+<p>In our previous <code>range</code> function, our call to ourself was in tail position; and we returned the result of calling ourself directly.  If, instead, we returned a function that wraps that call (<em>our thunk</em>), we can use a trampoline to continually execute ourself.</p>
+
+<p>Let's take a look at the trampoline function.</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trampoline</span>(<span class="hljs-params">fn</span>)</span>{  
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">var</span> res = fn.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+        <span class="hljs-keyword">while</span>(res <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>){
+            res = res();
+        }
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+</code></pre>
+
+<p>Trampoline is essentially a higher-order function that takes a function as an argument and returns a new function - a <em>combinator</em>!  This new function, when called, will repeatedly invoke the original function passed to trampoline as long as that function returns another function to execute (<em>the thunk</em>).  Once it gets back a result that is not a function, it stops executing and just returns the result of the last call.</p>
+
+<p>So, let's modify our previous range function to return a thunk instead of the result of calling ourself directly so that trampoline can repeatedly invoke it for us until we get a result.</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-comment">// Generate an array of numbers in a given range.</span>
+<span class="hljs-comment">// Tail Recursive implementation</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">s, e, res</span>) </span>{  
+  res = res || [];
+  res.push(s);
+  <span class="hljs-comment">// return a result or a thunk if we need to do more</span>
+  <span class="hljs-keyword">return</span> s == e ? res : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-keyword">return</span> range(s&lt;e ? ++s : --s, e, res); };
+}
+
+trampoline(range)(<span class="hljs-number">1</span>,<span class="hljs-number">4</span>); <span class="hljs-comment">// [1,2,3,4]  </span>
+</code></pre>
+
+<p>This style requires a slight modification when writing a recursive function; but, if we need to be recursive and need to work around a lack of tail-call optimization, such as in Javascript ES5, this allows us to proceed.  </p>
+
+<p>However, we are trading off performance for stack safety, as trampolined functions run much slower than straight iterative code or real, optimized tail-calls.</p>
+
+<p>But, we can now make our call to our range function without worrying about a stack overflow as before.</p>
+
+<pre class="highlight"><code class="language-javascript hljs">range(<span class="hljs-number">1</span>,<span class="hljs-number">100</span>);  
+<span class="hljs-comment">// =&gt; [1,2,3,4,...,98,99,100]</span>
+ranger(<span class="hljs-number">1</span>,<span class="hljs-number">32768</span>);  
+<span class="hljs-comment">// =&gt; [1,2,3,4,...,32766,32767,32768]  WORKS!!</span>
+</code></pre>
+
+<p>Here's how the call stack looks when executing our function using trampoline, the stack size is a constant, with a new stack only being created on each iterative execution of the recursive function.</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---Trampoline---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---Trampoline---JS.png" alt=""></a></p>
+
+<p>This is much different than our version without trampolining, in which the stack size grows linearly based on the number of recursive calls we have to make.</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES5---JS-1.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES5---JS-1.png" alt=""></a></p>
+
+<h2 id="considerationswhenusingrecursion">Considerations when using recursion?</h2>
+
+<p>Using recursion incorrectly or when not needed has the potential to cause problems: </p>
+
+<ul>
+<li>If you don't properly specify your terminal condition you could hit an infinite loop issue and lock up the browser. </li>
+<li>If your data or operation is sufficiently lengthy you run into the issue of stack overflow.  </li>
+<li>Also, because Javascript uses <em>eager evaluation</em> and isn't really built to properly handle recursive style programming or tail-call optimization, writing in recursive form will typically slow down performance.</li>
+</ul>
+
+<p>Regardless, recursion has very practical reasons for usage as well.  Writing functions that need to repeat for a set period of time or until some condition is met is an ideal reason.</p>
+
+<pre class="highlight"><code class="hljs javascript"><span class="hljs-comment">// Call ourselves repeatedly until some other async process</span>
+<span class="hljs-comment">// loads our app's local storage we need.</span>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">waitForLocalStorage</span>(<span class="hljs-params">key</span>) </span>{
+   <span class="hljs-keyword">if</span> (localStorage.getItem(key)) {
+      <span class="hljs-comment">// do something with loaded data</span>
+   }
+   <span class="hljs-keyword">else</span> {
+      setTimeout(waitForLocalStorage.bind(<span class="hljs-literal">null</span>, key), <span class="hljs-number">100</span>);
+  }
+})(<span class="hljs-string">'mydata'</span>);
+</code></pre>
+
+<p>Many searching and sorting algorithms rely on recursion to perform their operations; and, if re-written using iterative loops would be much more complex, unweildy or harder to read/maintain. Typically, imperative implementations using explicit loops will create and need to manage more state.  Think about binary searching algorithms like tree-traversal.</p>
+
+<p>Also, since we know that ES6 will support tail-call optimization via direct recursion and mutual recursion at some point, we can use methods like <em>trampoline</em> or even ES6 transpilers like Babel to allow us to write recursive functions that are performant and easily take advantage of new language/browser features as they become available.</p>
+
+<h3 id="performancecomparison">Performance comparison</h3>
+
+<p>As a simple test, I put together a <a href="http://jsperf.com/recursion-comparison/2">jsperf test</a> looking at the performance of each of the different versions of our <code>range</code> function above.  Here are the results:</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/jsperf-range.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/jsperf-range.png" alt=""></a></p>
+
+<p>Interstingly, we can see that the straight, iterative approach is the hands-down winner.  If you need performance at all costs, this is clearly your best bet with the current implementaiton of Javascript.</p>
+
+<p>The trampolined version isn't as slow as recursion not in tail position; but, unlike the recursive and tail recursive versions, it will not throw a RangeError if you have more nested calls than the browser has stack space.  It's a clear winner for writing safe recursive style code if performance is not the primary focus.</p>
+
+<p>Babel transpiles our code into a new function that processes using a while loop; and because of this, gets closer to the native iterative performance. We'll briefly cover Babel's transpilation at the end of this post.</p>
+
+<p>As a note, using IE Edge/Win 10 on Browserstack reported the browser as <em>Chrome 42.0.2311 (1)</em>, the first entry in the graph above. </p>
+
+<h2 id="tailcalloptimizationines6">Tail Call Optimization in ES6</h2>
+
+<p>We'll end our post with a glimpse at how tail-call optimization would work in ES6 and how that changes the stack during execution.  Here's our tail-recursive version of our range function, again:</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">s, e, res</span>) </span>{  
+  res = res || [];
+  res.push(s);
+  <span class="hljs-keyword">return</span> s == e ? res : range(s&lt;e ? ++s : --s, e, res);
+}
+</code></pre>
+
+<p>With proper tail-call optimization by the Javascript interpreter, our resulting call stack might look like the following:</p>
+
+<p><a href="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES6---JS.png" class="lightbox" data-featherlight="image"><img src="./Recursion, Tail Calls and Trampolines_files/Tail-Recursive-Execution-Stack---ES6---JS.png" alt=""></a></p>
+
+<p>Here, Javascript recognizes the tail-call and can then reuse the existing stack frame to make the recursive call, removing any previously local variables and state from the old call.</p>
+
+<p>If you're using Babel to transpile, Babel handles tail-call optimization on direct, self-recursion. So our above range function would be re-written by Babel into the following:</p>
+
+<pre class="highlight"><code class="language-javascript hljs"><span class="hljs-comment">// Generated using Babel 5.x</span>
+<span class="hljs-pi">"use strict"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">range</span>(<span class="hljs-params">_x, _x2, _x3</span>) </span>{  
+  <span class="hljs-keyword">var</span> _again = <span class="hljs-literal">true</span>;
+
+  _function: <span class="hljs-keyword">while</span> (_again) {
+    <span class="hljs-keyword">var</span> s = _x,
+        e = _x2,
+        res = _x3;
+    _again = <span class="hljs-literal">false</span>;
+
+    res = res || [];
+    res.push(s);
+    <span class="hljs-keyword">if</span> (s == e) {
+      <span class="hljs-keyword">return</span> res;
+    } <span class="hljs-keyword">else</span> {
+      _x = s &lt; e ? ++s : --s;
+      _x2 = e;
+      _x3 = res;
+      _again = <span class="hljs-literal">true</span>;
+      <span class="hljs-keyword">continue</span> _function;
+    }
+  }
+}
+</code></pre>
+
+<p>In this case, Babel inlines the function execution inside a while loop, using <code>continue</code> to implement a jump style control to repeat the loop until the given condition is true.  This is much more efficient than using <code>trampoline</code> to wrap recrusive functions for a number of reasons:</p>
+
+<ul>
+<li>Our function, in this case, is completely re-written so there are no nested function calls, keeping our stack context at a constant.</li>
+<li>The task our function performs is inlined in a loop, which is much more performant</li>
+</ul>
+
+<p>Using trampoline, we still have to invoke a function call, using the returned <em>thunks</em>, on each iteration, so we keep the overhead of creating and destroying stack frames. </p>
+
+<p>Trampolining is more generally applicable to a wide range of tail-recursive functions (<em>so long as they return thunks</em>) which is definitely more flexible and maintainable; but if performance is an issue, re-writing your code to use loops or taking advantage of transpilers like Babel is your best bet.</p>
+
+<h2 id="findoutmore">Find out more</h2>
+
+<p>You can find a lot about functional programming and recursion online from blogs and other sources, but the following are a few that I found helpful.</p>
+
+<ul>
+<li><a href="https://kangax.github.io/compat-table/es6/">ES6 Browser Compatibility Matrix</a></li>
+<li><a href="http://raganwald.com/2013/03/28/trampolines-in-javascript.html">Trampolines in Javascript</a> - Reginald Braithwaite</li>
+<li><a href="http://benignbemine.github.io/2015/07/19/es6-tail-calls/">ES6 Tail-call Optimization Explained</a> - Kyle Owen</li>
+<li><a href="http://davidshariff.com/blog/what-is-the-execution-context-in-javascript/">What is the Javascript Execution Context &amp; Stack</a> - David Shariff</li>
+</ul>
+        <ul class="tags">
+            <li class="tag" id="tag-id-5"><a href="http://www.datchley.name/tag/javascript/">javascript</a></li> 
+            <li class="tag" id="tag-id-22"><a href="http://www.datchley.name/tag/recursion/">recursion</a></li> 
+            <li class="tag" id="tag-id-13"><a href="http://www.datchley.name/tag/es6/">es6</a></li> 
+            <li class="tag" id="tag-id-11"><a href="http://www.datchley.name/tag/tail-call-optimization/">tail call optimization</a></li> 
+        </ul>
+  </section>
+
+  <section class="social-share">
+    <ul class="share-buttons">
+        <li>Share this: </li>
+        <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdatchley.name&amp;t=" target="_blank" title="Share on Facebook" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Bottom&#39;,&#39;Facebook&#39;]); window.open(&#39;https://www.facebook.com/sharer/sharer.php?u=&#39; + encodeURIComponent(document.URL) + &#39;&amp;t=&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-facebook-square fa-2x"></i></a></li>
+        <li><a class="twitter" href="https://twitter.com/intent/tweet?source=http%3A%2F%2Fdatchley.name&amp;text=:%20http%3A%2F%2Fdatchley.name&amp;via=tuxz0r" target="_blank" title="Tweet" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Bottom&#39;,&#39;Twitter&#39;]);window.open(&#39;https://twitter.com/intent/tweet?text=&#39; + encodeURIComponent(document.title) + &#39;:%20&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-twitter-square fa-2x"></i></a></li>
+        <li><a class="googleplus" href="https://plus.google.com/share?url=http%3A%2F%2Fdatchley.name" target="_blank" title="Share on Google+" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Bottom&#39;,&#39;GooglePlus&#39;]);window.open(&#39;https://plus.google.com/share?url=&#39; + encodeURIComponent(document.URL)); return false;"><i class="fa fa-google-plus-square fa-2x"></i></a></li>
+        <li><a class="reddit" href="http://www.reddit.com/submit?url=http%3A%2F%2Fdatchley.name&amp;title=" target="_blank" title="Submit to Reddit" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Bottom&#39;,&#39;Reddit&#39;]);window.open(&#39;http://www.reddit.com/submit?url=&#39; + encodeURIComponent(document.URL) + &#39;&amp;title=&#39; +  encodeURIComponent(document.title)); return false;"><i class="fa fa-reddit-square fa-2x"></i></a></li>
+        <li><a class="linkedin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fdatchley.name&amp;title=&amp;summary=&amp;source=http%3A%2F%2Fdatchley.name" target="_blank" title="Share on LinkedIn" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;SocialShare&#39;,&#39;Bottom&#39;,&#39;LinkedIn&#39;]);window.open(&#39;http://www.linkedin.com/shareArticle?mini=true&amp;url=&#39; + encodeURIComponent(document.URL) + &#39;&amp;title=&#39; +  encodeURIComponent(document.title)); return false;"><i class="fa fa-linkedin-square fa-2x"></i></a></li>
+    </ul>
+  </section>
+
+    <!-- post-footer -->
+    <ins class="adsbygoogle" style="display: block; height: 60px;" data-ad-client="ca-pub-6516524660910307" data-ad-slot="5337219074" data-ad-format="auto" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:720px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:60px;margin:0;padding:0;position:relative;visibility:visible;width:720px;background-color:transparent"><iframe width="720" height="60" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" src="./Recursion, Tail Calls and Trampolines_files/saved_resource(1).html"></iframe></ins></ins></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+  <section class="comments">
+      <a href="javascript:;" class="readmore smallbutton blue"><i class="fa fa-comments"></i> View Comments...</a>
+      <div id="disqus_thread"></div>
+  </section>
+
+  <footer class="post-footer">
+
+
+      <figure class="author-image">
+          <a class="img" href="http://www.datchley.name/author/dave/" style="background-image: url(/content/images/2015/05/datchley-avatar-image-square-2.jpg)"><span class="hidden">Dave Atchley's Picture</span></a>
+      </figure>
+
+      <section class="author">
+          <h4><a href="http://www.datchley.name/author/dave/">Dave Atchley</a></h4>
+
+              <p>Read <a href="http://www.datchley.name/author/dave/">more posts</a> by this author.</p>
+          <div class="author-meta">
+              
+              
+          </div>
+      </section>
+
+
+  </footer>
+
+</article>
+
+      </div>
+    </div>
+
+      <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+      <script>
+        /*
+        (function(document) {
+          var toggle = document.querySelector('.sidebar-toggle');
+          var sidebar = document.querySelector('#sidebar');
+          var checkbox = document.querySelector('#sidebar-checkbox');
+          var trigger = 'ontouchstart' in document ? 'touchstart' : 'click';
+
+          document.addEventListener(trigger, function(e) {
+            var target = e.target;
+
+            if(!checkbox.checked ||
+               sidebar.contains(target) ||
+               (target === checkbox || target === toggle)) return;
+
+            checkbox.checked = false;
+          }, false);
+        })(document);
+        */
+      </script>
+
+
+    <!-- You can safely delete this line if your theme does not require jQuery -->
+<script type="text/javascript" src="./Recursion, Tail Calls and Trampolines_files/jquery-1.11.3.min.js.下载"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><iframe id="sumome-jquery-iframe" title="Sumo Hidden Content" style="display: none;" src="./Recursion, Tail Calls and Trampolines_files/saved_resource(2).html"></iframe><a href="javascript:void(0);" title="Sumo" style="background-color: rgb(0, 115, 183); border-radius: 3px 0px 0px 3px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px; position: fixed; z-index: 2147483647; padding: 0px; width: 44px; height: 40px; text-indent: -10000px; opacity: 1; display: none !important;"><span style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Sumo</span><span style="display:block;width:40px;height:40px;background:white;margin-left:4px;-webkit-border-radius: 3px 0 0 3px;-moz-border-radius: 3px 0 0 3px;-ms-border-radius: 3px 0 0 3px;-o-border-radius: 3px 0 0 3px;border-radius: 3px 0 0 3px;background-repeat:no-repeat;background-position:8px 8px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDoxZDQ2MjI4YS03NWY2LTRkZTQtOGJjYy1hODc1NjRkMjYxYTUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDQ3MUVFMDFFMjVDMTFFNjlFQjhBRjdGODU5MDJBMDUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDQ3MUVFMDBFMjVDMTFFNjlFQjhBRjdGODU5MDJBMDUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxZDQ2MjI4YS03NWY2LTRkZTQtOGJjYy1hODc1NjRkMjYxYTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MWQ0NjIyOGEtNzVmNi00ZGU0LThiY2MtYTg3NTY0ZDI2MWE1Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+8JtvywAAAKhQTFRFzOPxSJvLA3W4Mo7FBna5w97u8vj7EHy8a67VhbzdsdTpVaLPh73d9/v9C3m6QZfJbq/WXKbR3u32JIfB3ez1KorDir/eBHW4+/3+rtPoZarUG4K/LIvDDnu7ocvkf7nbdrTY9fr8E328WKPQO5PITJ3MPpXJstXptdbq+Pv9cbHXaq3VU6HOkMLgnMnjDHq62uv1/P3+6/T53Oz1cLDX/f7+AHO3////ptOZ5QAAADh0Uk5T/////////////////////////////////////////////////////////////////////////wA7XBHKAAAAmUlEQVR42sSRRxLCMAxFRSq9907ovebr/jdDMWYGxmZL3sIqbyFbJv4B/VlkVlerKALTD3G46Mx3AOR1UZ/TsDxW6W0gfYRNVfTCFu2AWpAMgMItMW+zQJU2UjWI29D0+e5KWNPMk+A9Om+B/UgOJyCuwMJCrpuziYkIsglfRByZ/XM3eXnBFEu1kpMpjq9dxQYp/OAXTwEGAB7Rc1xVnPemAAAAAElFTkSuQmCC);"></span></a><div class="sumome-share-client-wrapper sumome-share-client-wrapper-right-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium" style="top: 707.5px;"><div class="sumome-share-client-show"><span></span></div><div data-sumome-share-pos="rp" class="sumome-share-client sumome-share-client-right-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium"><div class="sumome-share-client-animated sumome-share-client-share sumome-share-client-share-share sumome-share-client-count" data-sumome-share="share" style="background: rgb(255, 255, 255); color: black;"><span style="bottom: auto; top: 11.5px;"><strong>86</strong><br>Shares</span></div><a title="Facebook" class="sumome-share-client-animated sumome-share-client-share sumome-share-client-count" data-sumome-share="facebook" href="javascript:void(0);" style="background: rgb(59, 89, 152); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/facebook-white-60.png" alt="Facebook"><span>60</span></a><a title="Pinterest" class="sumome-share-client-animated sumome-share-client-share sumome-share-client-count" data-sumome-share="pinterest" href="javascript:void(0);" style="background: rgb(203, 32, 39); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/pinterest-white-60.png" alt="Pinterest"><span>3</span></a><a title="Twitter" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="twitter" href="javascript:void(0);" style="background: rgb(0, 172, 237); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/twitter-white-60.png" alt="Twitter"></a><a title="Google+" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="googleplus" href="javascript:void(0);" style="background: rgb(221, 75, 57); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/googleplus-white-60.png" alt="Google+"></a><a title="Email" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="email" href="javascript:void(0);" style="background: rgb(170, 170, 170); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/email-white-60.png" alt="Email"></a><a title="SumoMe" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="sumome" href="javascript:void(0);" style="background: rgb(15, 82, 186); color: rgb(255, 255, 255);"><img src="./Recursion, Tail Calls and Trampolines_files/sumome-white-60.png" alt="SumoMe"></a></div><div class="sumome-share-client-hide" style="display: none;"><span></span></div></div>
+    <script src="./Recursion, Tail Calls and Trampolines_files/highlight.min.js.下载"></script>
+    <script src="http://cdn.rawgit.com/noelboss/featherlight/1.3.2/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script> 
+	<script type="text/javascript" src="./Recursion, Tail Calls and Trampolines_files/theme.min.js.下载"></script>
+
+  
+
+<audio controls="controls" style="display: none;"></audio></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>
