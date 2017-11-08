@@ -1,0 +1,108 @@
+var Mint = new Object();
+Mint.save = function() 
+{
+	var now		= new Date();
+	var debug	= false; // this is set by php 
+	if (window.location.hash == '#Mint:Debug') { debug = true; };
+	var path	= 'http://web.archive.org/web/20110708232526/http://www.digital-web.com/mint/?record&key=3766435732537135716b5a374942363158304c783133315550';
+	path 		= path.replace(/^https?:/, window.location.protocol);
+	
+	// Loop through the different plug-ins to assemble the query string
+	for (var developer in this) 
+	{
+		for (var plugin in this[developer]) 
+		{
+			if (this[developer][plugin] && this[developer][plugin].onsave) 
+			{
+				path += this[developer][plugin].onsave();
+			};
+		};
+	};
+	// Slap the current time on there to prevent caching on subsequent page views in a few browsers
+	path += '&'+now.getTime();
+	
+	// Redirect to the debug page
+	if (debug) { window.open(path+'&debug&errors', 'MintLiveDebug'+now.getTime()); return; };
+	
+	var ie = /*@cc_on!@*/0;
+	if (!ie && document.getElementsByTagName && (document.createElementNS || document.createElement))
+	{
+		var tag = (document.createElementNS) ? document.createElementNS('http://web.archive.org/web/20110708232526/http://www.w3.org/1999/xhtml', 'script') : document.createElement('script');
+		tag.type = 'text/javascript';
+		tag.src = path + '&serve_js';
+		document.getElementsByTagName('head')[0].appendChild(tag);
+	}
+	else if (document.write)
+	{
+		document.write('<' + 'script type="text/javascript" src="' + path + '&amp;serve_js"><' + '/script>');
+	};
+};
+if (!Mint.SI) { Mint.SI = new Object(); }
+Mint.SI.Referrer = 
+{
+	onsave	: function() 
+	{
+		var encoded = 0;
+		if (typeof Mint_SI_DocumentTitle == 'undefined') { Mint_SI_DocumentTitle = document.title; }
+		else { encoded = 1; };
+		var referer		= (window.decodeURI)?window.decodeURI(document.referrer):document.referrer;
+		var resource	= (window.decodeURI)?window.decodeURI(document.URL):document.URL;
+		return '&referer=' + escape(referer) + '&resource=' + escape(resource) + '&resource_title=' + escape(Mint_SI_DocumentTitle) + '&resource_title_encoded=' + encoded;
+	}
+};
+if (!Mint.SI) { Mint.SI = new Object(); }
+Mint.SI.WindowWidth = 
+{
+	onsave	: function() 
+	{
+		var width = -1;
+		if (window.innerWidth)
+		{
+			width = window.innerWidth;
+		}
+		else if (document.getElementsByTagName)
+		{
+			var html = document.getElementsByTagName('html');
+			if (html[0].offsetWidth)
+			{
+				width = html[0].offsetWidth;
+			}
+		}
+		return '&window_width=' + width;
+	}
+};
+if (!Mint.SI) { Mint.SI = new Object(); }
+Mint.SI.RealEstate = 
+{
+	onsave	: function() 
+	{
+		var width = -1;
+		var height = -1;
+		
+		if (typeof window.innerWidth != "undefined")
+		{
+			width = window.innerWidth;
+			height = window.innerHeight;
+		}
+		else if (document.documentElement && typeof document.documentElement.offsetWidth != "undefined" && document.documentElement.offsetWidth != 0)
+		{
+			width = document.documentElement.offsetWidth;
+			height = document.documentElement.offsetHeight;
+		}
+		else if (document.body && typeof document.body.offsetWidth != "undefined")
+		{
+			width = d.body.offsetWidth;
+			height = d.body.offsetHeight;
+		};
+		
+		return '&window_width=' + width + '&window_height=' + height;
+	}
+};Mint.save();
+/*
+     FILE ARCHIVED ON 23:25:26 Jul 08, 2011 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:37:02 Nov 08, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/

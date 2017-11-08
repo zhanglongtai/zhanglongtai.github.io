@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0098)http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/analytics.js.下载" charset="utf-8"></script>
+
+<script type="text/javascript">archive_analytics.values.service='wb';archive_analytics.values.server_name='wwwb-app40.us.archive.org';archive_analytics.values.server_ms=712;</script><script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/wbhack.js.下载" charset="utf-8"></script>
+
+<script type="text/javascript">
+__wbhack.init('http://web.archive.org/web');
+</script>
+<link rel="stylesheet" type="text/css" href="./Digital Web Magazine - Scope in JavaScript_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./Digital Web Magazine - Scope in JavaScript_files/iconochive.css">
+
+<!-- End Wayback Rewrite JS Include -->
+
+	
+	<meta name="resource-type" content="Document">
+	<title>Digital Web Magazine	 - Scope in JavaScript	</title>
+	
+	<meta name="description" content="Digital Web Magazine - Scope in JavaScript">
+	<meta name="keywords" content="Scope in JavaScript, Scope, this, this., .apply(), .call(), .bind(), click_handler, JavaScript, JS, DOM, DHTML, Mike West, Mike, West">
+	<meta name="distribution" content="local">
+	<meta name="copyright" content="Copyright 0 Digital Web Magazine">
+	<meta name="type" content="index">
+	<meta name="pubdate" content="20060911">
+	<link rel="shortcut icon" type="image/ico" href="http://web.archive.org/web/20110725013125im_/http://www.digital-web.com/favicon.ico">
+
+	<link rel="bookmark" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#masthead" title="Top of the Page">
+	<link rel="bookmark" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#globalNav" title="Navigation">
+	<link rel="search" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/search/" title="Search Digital Web Magazine">
+	<link rel="bookmark" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#content" title="Content">
+	<link rel="copyright" href="javascript:alert(&#39;Copyright 0 Digital Web Magazine&#39;)">
+	
+<link rel="stylesheet" type="text/css" href="./Digital Web Magazine - Scope in JavaScript_files/article.css" media="screen" title="Digital Web Magazine Style"><link rel="alternate stylesheet" type="text/css" href="./Digital Web Magazine - Scope in JavaScript_files/print.css" media="screen" title="Print Preview">
+<link rel="stylesheet" type="text/css" href="./Digital Web Magazine - Scope in JavaScript_files/print.css" media="print">
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/brand"></script>
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/api.js.下载"></script>
+<script src="./Digital Web Magazine - Scope in JavaScript_files/saved_resource" type="text/javascript"></script><script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/saved_resource(1)"></script>
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<script type="text/javascript" async="" src="./Digital Web Magazine - Scope in JavaScript_files/bsa.js.下载"></script><script type="text/javascript" id="_bsap_js_842608e642eb3567cae5b25f74c41b60" src="./Digital Web Magazine - Scope in JavaScript_files/s_842608e642eb3567cae5b25f74c41b60.js.下载" async="async"></script></head>
+<body id="article"><div id="wm-ipp" lang="en" style="display: block; direction: ltr;">
+<div style="position:fixed;left:0;top:0;right:0;">
+<div id="wm-ipp-inside">
+  <div style="position:relative;">
+    <div id="wm-logo" style="float:left;width:130px;padding-top:10px;">
+      <a href="http://web.archive.org/web/" title="Wayback Machine home page"><img src="./Digital Web Magazine - Scope in JavaScript_files/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0"></a>
+    </div>
+    <div class="r" style="float:right;">
+      <div id="wm-btns" style="text-align:right;height:25px;">
+        	<a href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+	<a id="wm-tb-close" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#close" onclick="__wm.h(event);return false;" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" style="text-align:right;">
+	<a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#" onclick="window.open(&#39;https://www.facebook.com/sharer/sharer.php?u=http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/&#39;, &#39;&#39;, &#39;height=400,width=600&#39;); return false;" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+	<a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#" onclick="window.open(&#39;https://twitter.com/intent/tweet?text=http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/&amp;via=internetarchive&#39;, &#39;&#39;, &#39;height=400,width=600&#39;); return false;" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+    </div>
+    <table class="c" style="">
+      <tbody>
+	<tr>
+	  <td class="u" colspan="2">
+	    <form target="_top" method="get" action="http://web.archive.org/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://www.digital-web.com/articles/scope_in_javascript/" onfocus="this.focus();this.select();" autocomplete="off"><input type="hidden" name="type" value="replay"><input type="hidden" name="date" value="20110725013125"><input type="submit" value="Go"></form>
+	  </td>
+	  <td class="n" rowspan="2" style="width:110px;">
+	    <table>
+	      <tbody>
+		<!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+		<tr class="m">
+		  <td class="b" nowrap="nowrap"><a href="http://web.archive.org/web/20110624073925/http://www.digital-web.com/articles/scope_in_javascript/" title="24 Jun 2011"><strong>Jun</strong></a></td>
+		  <td class="c" id="displayMonthEl" title="You are here: 01:31:25 Jul 25, 2011">JUL</td>
+		  <td class="f" nowrap="nowrap"><a href="http://web.archive.org/web/20110827102743/http://www.digital-web.com/articles/scope_in_javascript/" title="27 Aug 2011"><strong>Aug</strong></a></td>
+		</tr>
+		<!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+		<tr class="d">
+		  <td class="b" nowrap="nowrap"><a href="http://web.archive.org/web/20110704144024/http://www.digital-web.com/articles/scope_in_javascript" title="14:40:24 Jul 04, 2011"><img src="./Digital Web Magazine - Scope in JavaScript_files/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0"></a></td>
+		  <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 01:31:25 Jul 25, 2011">25</td>
+		  <td class="f" nowrap="nowrap"><a href="http://web.archive.org/web/20110808101218/http://www.digital-web.com:80/articles/scope_in_javascript" title="10:12:18 Aug 08, 2011"><img src="./Digital Web Magazine - Scope in JavaScript_files/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0"></a></td>
+		</tr>
+		<!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+		<tr class="y">
+		  <td class="b" nowrap="nowrap"><a href="http://web.archive.org/web/20100715211146/http://www.digital-web.com:80/articles/scope_in_javascript" title="15 Jul 2010"><strong>2010</strong></a></td>
+		  <td class="c" id="displayYearEl" title="You are here: 01:31:25 Jul 25, 2011">2011</td>
+		  <td class="f" nowrap="nowrap"><a href="http://web.archive.org/web/20120729005340/http://www.digital-web.com/articles/scope_in_javascript/" title="29 Jul 2012"><strong>2012</strong></a></td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </td>
+	</tr>
+	<tr>
+	  <td class="s">
+	    	    <div id="wm-nav-captures"><a class="t" href="http://web.archive.org/web/*/http://www.digital-web.com/articles/scope_in_javascript/" title="See a list of every capture for this URL">254 captures</a><div class="r" title="Timespan for captures of this URL">17 Oct 2006 - 28 Jun 2017</div></div>
+	  </td>
+	  <td class="k">
+	    <a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/" id="wm-graph-anchor">
+	      <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+		<canvas id="wm-sparkline-canvas" width="550" height="27" border="0"></canvas>
+	      <div class="yt" style="display: none; width: 25px; height: 27px;"></div><div class="mt" style="display: none; width: 2px; height: 27px;"></div></div>
+	    </a>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <div style="position:absolute;bottom:0;right:2px;text-align:right;">
+      <a id="wm-expand" class="wm-btn wm-closed" href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span style="font-size:80%">About this capture</span></a>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+            <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/webwidecrawl);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/webwidecrawl" target="_new"><span class="wm-title">Internet Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Internet Archive discovers and captures web pages through many different web crawls.
+
+At any given time several distinct crawls are running, some for months, and some every day or longer.
+
+View the web archive through the <a href="http://archive.org/web/web.php">Wayback Machine</a>.
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/wikipediaoutlinks00002)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/wikipediaoutlinks00002" target="_new"><span class="wm-title">Wikipedia Outlinks July 2011</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Crawl of outlinks from wikipedia.org started July, 2011. These files are currently not publicly accessible.
+	</div>
+	      </div>
+    </div>
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="./Digital Web Magazine - Scope in JavaScript_files/loading.gif" alt="loading"></div>
+    </div>
+  </div></div></div></div><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/timestamp.js.下载" charset="utf-8"></script>
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/graph-calc.js.下载" charset="utf-8"></script>
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/auto-complete.js.下载" charset="utf-8"></script>
+<script type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/toolbar.js.下载" charset="utf-8"></script>
+
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  /*min-width:800px !important;*/
+}
+.wb-autocomplete-suggestions {
+    text-align: left; cursor: default; border: 1px solid #ccc; border-top: 0; background: #fff; box-shadow: -1px 1px 3px rgba(0,0,0,.1);
+    position: absolute; display: none; z-index: 2147483647; max-height: 254px; overflow: hidden; overflow-y: auto; box-sizing: border-box;
+}
+.wb-autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.02em; color: #333; }
+.wb-autocomplete-suggestion b { font-weight: bold; }
+.wb-autocomplete-suggestion.selected { background: #f0f0f0; }
+</style>
+<script type="text/javascript">
+__wm.bt(550,27,25,2,"web","http://www.digital-web.com/articles/scope_in_javascript/","2011-07-25",1996);
+</script><div class="wb-autocomplete-suggestions " style="left: 163px; top: 376px; width: 658px;"></div>
+<!-- END WAYBACK TOOLBAR INSERT -->
+	
+	<!-- AdPacks.com Ad Code -->
+	<script type="text/javascript">
+	(function(){
+	  var bsa = document.createElement('script');
+	     bsa.type = 'text/javascript';
+	     bsa.async = true;
+	     bsa.src = '//web.archive.org/web/20110725013125/http://s3.buysellads.com/ac/bsa.js';
+	  (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(bsa);
+	})();
+	</script>
+	<!-- End AdPacks.com Ad Code -->
+
+	
+
+<h1 id="masthead"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/"><img src="./Digital Web Magazine - Scope in JavaScript_files/dw_logo_big.gif" width="316" height="77" alt="Digital Web Magazine"></a></h1>
+<p id="slogan">The web professional's online magazine of choice.</p>
+
+<div id="content" class="column">
+	
+		<h1>Scope in JavaScript</h1>
+
+	<div id="comment_invite_top">
+		<strong>Got something to say?</strong>
+		<p><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/comments/">Share your comments</a> on this topic with other web professionals</p>
+	</div>
+
+	<p class="location">In: <a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/types/articles/">Articles</a></p>
+				<p class="author">By <a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/about/contributors/mike_west">Mike West</a></p>
+		<p class="date">Published on September 11, 2006</p>
+
+	<p><a href="http://web.archive.org/web/20110725013125/http://en.wikipedia.org/wiki/Scope_%28programming%29">Scope</a> is one of the foundational aspects of the JavaScript language, and probably the one I’ve struggled with the most when building complex programs.  I can’t count the number of times I’ve lost track of what the <code>this</code> keyword refers to after passing control around from function to function, and I’ve often found myself contorting my code in all sorts of confusing ways, trying to retain some semblance of sanity in my understanding of which variables were accessible where.</p>
+<blockquote class="pullquote"><p class="pullquote"><span class="pullquote">In typical object-oriented programming, we need a way of identifying and referring to the object that we’re currently working with.  <code>this</code> serves the purpose admirably, providing our objects the ability to examine themselves, and point at their own properties.</span></p></blockquote><p>This article will tackle the problem head-on, outlining definitions of context and scope, examining two JavaScript methods that allow us to manipulate context, and concluding with a deep dive into an <em>effective</em> solution to ninety percent of the problems I’ve run into.</p>
+<h3>Where Am I?  And Who Are You?</h3>
+<p>Every bit of your JavaScript program is executed in one <strong>execution context</strong> or another.  You can think of these contexts as your code’s neighborhood, giving each line an understanding of where it comes from, and who its friends and neighbors are.  As it turns out, this is important information, as JavaScript societies have fairly strict rules about who can associate with whom; execution contexts are better thought of as gated communities than as open subdivisions.</p>
+<p>We can refer to these social boundaries generally as <strong>scope</strong>, and they’re important enough to be codified in each neighborhood’s charter, which we’ll refer to as the context’s <strong>scope chain</strong>.  Code within a particular neighborhood can only access variables listed on its scope chain, and prefers interaction with locals to associations outside its neighborhood.</p>
+<p>Practically speaking, evaluating a function establishes a distinct execution context that appends its local scope to the scope chain it was defined within.  JavaScript resolves identifiers within a particular context by climbing up the scope chain, moving locally to globally.  This means that local variables with the same name as variables higher up on the scope chain take precedence, which makes sense: If my good friends are talking together about “Mike West,” it’s pretty clear that they’re talking about <em>me</em>, not about the <a href="http://web.archive.org/web/20110725013125/http://www.mikewest.net/" rel="nofollow">bluegrass singer</a> or the <a href="http://web.archive.org/web/20110725013125/http://www.isds.duke.edu/~mw/" rel="nofollow">Duke professor</a>, even though the latter two are (arguably) better known.</p>
+<p>Let’s walk through some example code to explore the implications:</p>
+<p><code>&lt;script type="text/javascript"&gt;
+<br>&nbsp;var ima_celebrity = "Everyone can see me!  I'm famous!",
+<br>&nbsp;&nbsp;the_president = "I'm the decider!";
+<br>&nbsp;
+<br>&nbsp;function pleasantville() {
+<br>&nbsp;&nbsp;var the_mayor       = "I rule Pleasantville with an iron fist!",
+<br>&nbsp;&nbsp;&nbsp;ima_celebrity   = "All my neighbors know who I am!";
+<br>&nbsp;
+<br>&nbsp;&nbsp;function lonely_house() {
+<br>&nbsp;&nbsp;&nbsp;var agoraphobic = "I fear the day star!",
+<br>&nbsp;&nbsp;&nbsp;&nbsp;a_cat       = "Meow.";                
+<br>&nbsp;&nbsp;}
+<br>&nbsp;}
+<br>&lt;/script&gt;
+</code></p>
+<p>Our global star, <code>ima_celebrity</code>, is recognized by everyone.  She’s politically active, talking with <code>the_president</code> on a fairly frequent basis, and incredibly friendly; she’ll sign autographs and answer questions for anyone she runs into.  That said, she doesn’t have a whole lot of personal contact with her fans.  She’s pretty sure they <em>exist</em> and that they probably have lives of their own somewhere, but she certainly doesn’t know what they’re doing, or even their names.</p>
+<p>Inside <code>pleasantville</code>, <code>the_mayor</code> is a well-known face.  She’s always walking the streets of her town, chatting up her constituents, shaking hands, and kissing babies.  As <code>pleasantville</code> is a big, important neighborhood, she’s got a big red phone in her office, giving her a direct line to the president (or at least a top aide) 24 hours a day, 7 days a week.  She’s seen <code>lonely_house</code> up on a hill at the outskirts of town, but never really worried about who lives inside.</p>
+<p>That <code>lonely_house</code> is a world unto itself.  The <code>agoraphobic</code> stays inside most of the time, playing solitaire and feeding <code>a_cat</code>.  He’s called <code>the_mayor</code> a few times to ask about local noise regulations, and even wrote <code>ima_celebrity</code> (Pleasantville’s <code>ima_celebrity</code>, that is) some fan mail after seeing her on the local news.</p>
+<h3><code>this</code>?  What’s that?</h3>
+<p>In addition to establishing a scope chain, each execution context offers a keyword named <code>this</code>.  In its most common usage, <code>this</code> serves as an identity function, providing our neighborhoods a way of referring to themselves.  We can’t always rely on that behavior, however: Depending on how we get into a particular neighborhood, <code>this</code> might mean something else entirely.  In fact, <em>how we get into the neighborhood</em> is itself exactly what <code>this</code> generally refers to.  Four scenarios deserve special attention:</p>
+<ul>
+<li><strong>Calling an Object’s Method</strong>
+<p><span class="pullquote">In typical object-oriented programming, we need a way of identifying and referring to the object that we’re currently working with.  <code>this</code> serves the purpose admirably, providing our objects the ability to examine themselves, and point at their own properties.</span></p>
+<p><code>&nbsp;&lt;script type="text/javascript"&gt;
+<br>&nbsp;&nbsp;var deep_thought = {
+<br>&nbsp;&nbsp;&nbsp;the_answer:     42,
+<br>&nbsp;&nbsp;&nbsp;ask_question:   function () {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;return this.the_answer;
+<br>&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;};
+<br>&nbsp;
+<br>&nbsp;&nbsp;var the_meaning = deep_thought.ask_question();
+<br>&nbsp;&lt;/script&gt;
+</code></p>
+<p>This example builds an object named <code>deep_thought</code>, sets its <code>the_answer</code> property to 42, and creates an <code>ask_question</code> method.  When <code>deep_thought.ask_question()</code> is executed, JavaScript establishes an execution context for the function call, setting <code>this</code> to the object referenced by whatever came before the last ”.”, in this case: <code>deep_thought</code>.  The method can then look in the mirror via <code>this</code> to examine its own properties, returning the value stored in <code>this.the_answer</code>: 42.</p>
+</li>
+<li><strong>Constructor</strong>
+<p>Likewise, when defining a function to be used as a constructor with the <code>new</code> keyword, <code>this</code> can be used to refer to the object being created. Let’s rewrite the example above to reflect that scenario:</p>
+<p><code>&nbsp;&lt;script type="text/javascript"&gt;
+<br>&nbsp;&nbsp;function BigComputer(answer) {
+<br>&nbsp;&nbsp;&nbsp;this.the_answer     = answer;
+<br>&nbsp;&nbsp;&nbsp;this.ask_question   = function () {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;return this.the_answer;
+<br>&nbsp;&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;}
+<br>&nbsp;
+<br>&nbsp;&nbsp;var deep_thought = new BigComputer(42);
+<br>&nbsp;&nbsp;var the_meaning  = deep_thought.ask_question();
+<br>&nbsp;&lt;/script&gt;
+</code></p>
+<p>Instead of explicitly creating the <code>deep_thought</code> object, we’ll write a function to create <code>BigComputer</code> objects, and <i>instantiate</i> <code>deep_thought</code> as an instance variable via the <code>new</code> keyword.  When <code>new BigComputer()</code> is executed, a completely new object is created transparently in the background.  <code>BigComputer</code> is called, and its <code>this</code> keyword is set to reference that new object.  The function can set properties and methods on <code>this</code>, which is transparently returned at the end of <code>BigComputer</code>’s execution.</p>
+<p>Notice, though, that <code>deep_thought.the_question()</code> still works just as it did before.  What’s going on there?  Why does <code>this</code> mean something different inside <code>the_question</code> than it does inside <code>BigComputer</code>?  Put simply, we <em>entered</em> <code>BigComputer</code> via <code>new</code>, so <code>this</code> meant “the new object.”  On the other hand, we <em>entered</em> <code>the_question</code> via <code>deep_thought</code>, so while we’re executing that method, <code>this</code> means “whatever <code>deep_thought</code> refers to”.  <code>this</code> is not read from the scope chain as other variables are, but instead is <em>reset</em> on a context by context basis.</p>
+</li>
+<li><strong>Function Call</strong>
+<p>What if we just call a normal, everyday function without any of this fancy object stuff?  What does <code>this</code> mean in that scenario?</p>
+<p><code>&nbsp;&lt;script type="text/javascript"&gt;
+<br>&nbsp;&nbsp;function test_this() {
+<br>&nbsp;&nbsp;&nbsp;return this;
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&nbsp;var i_wonder_what_this_is = test_this();
+<br>&nbsp;&lt;/script&gt;
+</code></p>
+<p>In this case, we weren’t provided a context by <code>new</code>, nor were we given a context in the form of an object to piggyback off of.  Here, <code>this</code> defaults to reference the most global thing it can: for web pages, this is the <code>window</code> object.</p>
+</li>
+<li><strong>Event Handler</strong>
+<p>For a more complicated twist on the normal function call, let’s say that we’re using a function to handle an <code>onclick</code> event.  What does <code>this</code> mean when the event triggers our function’s execution?  Unfortunately, there’s not a simple answer to this question.</p>
+<p>If we write the event handler inline, <code>this</code> refers to the global <code>window</code> object:</p>
+<p><code>&nbsp;&lt;script type="text/javascript"&gt;
+<br>&nbsp;&nbsp;function click_handler() {
+<br>&nbsp;&nbsp;&nbsp;alert(this);  // alerts the window object
+<br>&nbsp;&nbsp;}
+<br>&nbsp;&lt;/script&gt;
+<br>&nbsp;...
+<br>&nbsp;&lt;button id='thebutton' onclick='click_handler()'&gt;Click me!&lt;/button&gt;
+</code></p>
+<p>However, when we add an event handler via JavaScript, <code>this</code> refers to the DOM element that generated the event. (Note: The event handling shown here is short and readable, but otherwise poor.  Please use a <a href="http://web.archive.org/web/20110725013125/http://dean.edwards.name/weblog/2005/10/add-event2/">real addEvent function</a> instead.):</p>
+<p><code>&nbsp;&lt;script type="text/javascript"&gt;
+<br>&nbsp;&nbsp;function click_handler() {
+<br>&nbsp;&nbsp;&nbsp;alert(this);  // alerts the button DOM node
+<br>&nbsp;&nbsp;}
+<br>&nbsp;
+<br>&nbsp;&nbsp;function addhandler() {
+<br>&nbsp;&nbsp;&nbsp;document.getElementById('thebutton').onclick = click_handler;
+<br>&nbsp;&nbsp;}
+<br>&nbsp;
+<br>&nbsp;&nbsp;window.onload = addhandler;
+<br>&nbsp;&lt;/script&gt;
+<br>&nbsp;...
+<br>&nbsp;&lt;button id='thebutton'&gt;Click me!&lt;/button&gt;
+</code></p>
+</li>
+</ul>
+<h3>Complications</h3>
+<p>Let’s run with that last example for a moment longer.  What if instead of running <code>click_handler</code>, we wanted to ask <code>deep_thought</code> a question every time we clicked the button?  The code for that seems pretty straightforward; we might try this:</p>
+<p><code>&lt;script type="text/javascript"&gt;
+<br>&nbsp;function BigComputer(answer) {
+<br>&nbsp;&nbsp;this.the_answer     = answer;
+<br>&nbsp;&nbsp;this.ask_question   = function () {
+<br>&nbsp;&nbsp;&nbsp;alert(this.the_answer);
+<br>&nbsp;&nbsp;}
+<br>&nbsp;}
+<br>&nbsp;
+<br>&nbsp;function addhandler() {
+<br>&nbsp;&nbsp;var deep_thought    = new BigComputer(42),
+<br>&nbsp;&nbsp;&nbsp;the_button      = document.getElementById('thebutton');
+<br>&nbsp;
+<br>&nbsp;&nbsp;the_button.onclick = deep_thought.ask_question;
+<br>&nbsp;}
+<br>&nbsp;
+<br>&nbsp;window.onload = addhandler;
+<br>&lt;/script&gt;
+</code></p>
+<p>Perfect, right?  We click on the button, <code>deep_thought.ask_question</code> is executed, and we get back “42.” So why is the browser giving us <code>undefined</code> instead?  What did we do wrong?</p>
+<p>The problem is simply this: We’ve passed off a reference to the <code>ask_question</code> method, which, when executed as an event handler, runs in a different context than when it’s executed as an object method.  In short, the <code>this</code> keyword in <code>ask_question</code> is pointing at the DOM element that generated the event, not at a <code>BigComputer</code> object.  The DOM element doesn’t have a <code>the_answer</code> property, so we’re getting back <code>undefined</code> instead of “42.”  <code>setTimeout</code> exhibits similar behavior, delaying the execution of a function while at the same time moving it out into a global context.</p>
+<p>This issue crops up all over the place in our programs, and it’s a terribly difficult problem to debug without keeping careful track of what’s going on in all the corners of your program, especially if your object has properties that <em>do</em> exist on DOM elements or the <code>window</code> object.</p>
+<h3>Manipulating Context With <code>.apply()</code> and <code>.call()</code></h3>
+<p>We really <em>do</em> want to be able to ask <code>deep_thought</code> a question when we click the button, and more generally, we <em>do</em> want to be able to call object methods in their native context when responding to things like events and <code>setTimeout</code> calls.  Two little-known JavaScript methods, <code>apply</code> and <code>call</code>, indirectly enable this functionality by allowing us to manually override the default value of <code>this</code> when we execute a function call.  Let’s look at <code>call</code> first:</p>
+<p><code>&lt;script type="text/javascript"&gt;
+<br>&nbsp;var first_object = {
+<br>&nbsp;&nbsp;num:   42
+<br>&nbsp;};
+<br>&nbsp;var second_object = {
+<br>&nbsp;&nbsp;num:   24
+<br>&nbsp;};
+<br>&nbsp;
+<br>&nbsp;function multiply(mult) {
+<br>&nbsp;&nbsp;return this.num * mult;
+<br>&nbsp;}
+<br>&nbsp;
+<br>&nbsp;multiply.call(first_object, 5);     // returns 42 * 5
+<br>&nbsp;multiply.call(second_object, 5);    // returns 24 * 5
+<br>&lt;/script&gt;
+</code></p>
+<p>In this example, we first define two objects, <code>first_object</code> and <code>second_object</code>, each with a <code>num</code> property.  Then we define a <code>multiply</code> function that accepts a single argument, and returns the product of that argument, and the <code>num</code> property of its <code>this</code> object.  If we called that function by itself, the answer returned would almost certainly be <code>undefined</code>, since the global <code>window</code> object doesn’t have a <code>num</code> property unless we explicitly set one.  We need some way of telling <code>multiply</code> what its <code>this</code> keyword ought refer to; the <code>call</code> method of the <code>multiply</code> function is exactly what we’re looking for.</p>
+<p>The first argument to <code>call</code> defines what <code>this</code> means inside the executed function.  The remaining arguments to <code>call</code> are passed into the executed function, just as if you’d called it yourself.  So, when <code>multiply.call(first_object, 5)</code> is executed, the <code>multiply</code> function is called, <code>5</code> is passed in as the first argument, and the <code>this</code> keyword is set to refer to object <code>first_object</code>.  Likewise, when <code>multiply.call(second_object, 5)</code> is executed, the <code>multiply</code> function is called, <code>5</code> is passed in as the first argument, and the <code>this</code> keyword is set to refer to object <code>second_object</code>.</p>
+<p><code>apply</code> works in exactly the same way as <code>call</code>, but allows you to wrap up the arguments to the called function in an array, which can be quite useful when programatically generating function calls.  Replicating the functionality we just talked about using <code>apply</code> is trivial:</p>
+<p><code>&lt;script type="text/javascript"&gt;
+<br>&nbsp;...
+<br>&nbsp;
+<br>&nbsp;multiply.apply(first_object, [5]);     // returns 42 * 5
+<br>&nbsp;multiply.apply(second_object, [5]);    // returns 24 * 5
+<br>&lt;/script&gt;
+</code></p>
+<p><code>apply</code> and <code>call</code> are very useful on their own, and well worth keeping around in your toolkit, but they only get us halfway to solving the problem of context shifts for event handlers.  It’s easy to think that we could solve the problem by simply using <code>call</code> to shift the meaning of <code>this</code> when we set up the handler:</p>
+<p><code>function addhandler() {
+<br>&nbsp;var deep_thought    = new BigComputer(42),
+<br>&nbsp;&nbsp;the_button      = document.getElementById('thebutton');
+<br>&nbsp;
+<br>&nbsp;the_button.onclick = deep_thought.ask_question.call(deep_thought);
+<br>}
+</code></p>
+<p>The problem with this line of reasoning is simple: <code>call</code> executes the function <em>immediately</em>.  Instead of providing a function reference to the <code>onclick</code> handler, we’re giving it <em>the result</em> of an executed function.  We need to exploit another feature of JavaScript to really solve this problem.</p>
+<h3>The Beauty of <code>.bind()</code></h3>
+<p>I’m not a <em>huge</em> fan of the <a href="http://web.archive.org/web/20110725013125/http://prototype.conio.net/">Prototype JavaScript framework</a>, but I am very much impressed with the quality of its code as a whole.  In particular, one simple addition it makes to the <code>Function</code> object has had a hugely positive impact on my ability to manage the context in which function calls execute: <code>bind</code> performs the same general task as <code>call</code>, altering the context in which a function executes.  The difference is that <code>bind</code> returns a function reference that can be used later, rather than the result of an immediate execution that we get with <code>call</code>.</p>
+<p>If we simplify the <code>bind</code> function a bit to get at the key concepts, we can insert it into the multiplication example we discussed earlier to really dig into how it works; it’s quite an elegant solution:</p>
+<p><code>&lt;script type="text/javascript"&gt;
+<br>&nbsp;var first_object = {
+<br>&nbsp;&nbsp;num:   42
+<br>&nbsp;};
+<br>&nbsp;var second_object = {
+<br>&nbsp;&nbsp;num:   24
+<br>&nbsp;};
+<br>&nbsp;
+<br>&nbsp;function multiply(mult) {
+<br>&nbsp;&nbsp;return this.num * mult;
+<br>&nbsp;}
+<br>&nbsp;
+<br>&nbsp;Function.prototype.bind = function(obj) {
+<br>&nbsp;&nbsp;var method  = this,
+<br>&nbsp;&nbsp;&nbsp;temp    = function() {
+<br>&nbsp;&nbsp;&nbsp;&nbsp;return method.apply(obj, arguments);
+<br>&nbsp;&nbsp;&nbsp;};
+<br>&nbsp;
+<br>&nbsp;&nbsp;return temp;
+<br>&nbsp;}
+<br>&nbsp;
+<br>&nbsp;var first_multiply = multiply.bind(first_object);
+<br>&nbsp;first_multiply(5);  // returns 42 * 5
+<br>&nbsp;
+<br>&nbsp;var second_multiply = multiply.bind(second_object);
+<br>&nbsp;second_multiply(5);  // returns 24 * 5
+<br>&lt;/script&gt;
+</code></p>
+<p>First, we define <code>first_object</code>, <code>second_object</code>, and the <code>multiply</code> function, just as before.  With those taken care of, we move on to creating a <code>bind</code> method on the <code>Function</code> object’s <a href="http://web.archive.org/web/20110725013125/http://en.wikipedia.org/wiki/Prototype-based_programming"><code>prototype</code></a>, which has the effect of making <code>bind</code> available for all functions in our program.  When <code>multiply.bind(first_object)</code> is called, JavaScript creates an execution context for the <code>bind</code> method, setting <code>this</code> to the <code>multiply</code> function, and setting the first argument, <code>obj</code>, to reference <code>first_object</code>.  So far, so good.</p>
+<p>The real genius of this solution is the creation of <code>method</code>, set equal to <code>this</code> (the <code>multiply</code> function itself).  When the anonymous function is created on the next line, <code>method</code> is accessible via its scope chain, as is <code>obj</code> (<code>this</code> couldn’t be used here, because when the newly created function is executed, <code>this</code> will be overwritten by a new, local context).  This alias to <code>this</code> makes it possible to use <code>apply</code> to execute the <code>multiply</code> function, passing in <code>obj</code> to ensure that the context is set correctly.  In computer-science-speak, <code>temp</code> is a <a href="http://web.archive.org/web/20110725013125/http://www.jibbering.com/faq/faq_notes/closures.html"><cite>closure</cite></a> that, when returned at the end of the <code>bind</code> call, can be used in any context whatsoever to execute <code>multiply</code> in the context of <code>first_object</code>.</p>
+<p>This is exactly what we need for the event handler and <code>setTimeout</code> scenarios discussed above.  The following code solves that problem completely, binding the <code>deep_thought.ask_question</code> method to the <code>deep_thought</code> context, so that it executes correctly whenever the event is triggered:</p>
+<p><code>function addhandler() {
+<br>&nbsp;var deep_thought    = new BigComputer(42),
+<br>&nbsp;&nbsp;the_button      = document.getElementById('thebutton');
+<br>&nbsp;
+<br>&nbsp;the_button.onclick = deep_thought.ask_question.bind(deep_thought);
+<br>}
+</code></p>
+<p>Beautiful.</p>
+<h3>References</h3>
+<ul>
+<li><a href="http://web.archive.org/web/20110725013125/http://www.jibbering.com/faq/faq_notes/closures.html">JavaScript Closures</a> is the best resource on the net for a thorough discussion of closures: what they do, how they do it, and how to use them without going insane.
+</li>
+<li>The <a href="http://web.archive.org/web/20110725013125/http://prototype.conio.net/">Protype JavaScript Framework</a> is full of little nuggets like <code>bind</code>.  The version available here not only allows the binding of a particular <code>this</code> value, but also of some or all of a function’s arguments, which comes in handy all too often.
+</li>
+<li><a href="http://web.archive.org/web/20110725013125/http://javascript.crockford.com/">Douglas Crockford’s JavaScript essays</a> are excellent resources for both basic and advanced JavaScript programmers.  The man knows what he’s talking about, and explains difficult concepts in an easy-to-grasp manner.
+</li>
+<li><a href="http://web.archive.org/web/20110725013125/http://digital-web.com/articles/variable_scope_for_new_programmers/">Variable Scope for New Programmers</a> is a good article if you'd like more discussion of scope from a beginner's perspective.  Written by <a href="http://web.archive.org/web/20110725013125/http://snook.ca/">Jonathan Snook</a>, and published in this very magazine at the end of last year, it's still an informative and useful read.</li>
+</ul>
+	<div id="comment_invite_bottom">
+		<strong>Got something to say?</strong>
+				<p><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/articles/scope_in_javascript/comments/">Share&nbsp;your&nbsp;comments&nbsp;&nbsp;with&nbsp;other&nbsp;professionals</a>&nbsp;(2&nbsp;comments)</p>
+	</div>
+	
+	<ul id="bookmarks">
+		<li class="magnolia"><a href="http://web.archive.org/web/20110725013125/http://ma.gnolia.com/bookmarklet/add?url=http://www.digital-web.com/articles/scope_in_javascript&amp;description=Scope+in+JavaScript">Add to Magnolia</a></li><li class="myyahoo"><a href="http://web.archive.org/web/20110725013125/http://myweb2.search.yahoo.com/myresults/bookmarklet?u=http://www.digital-web.com/articles/scope_in_javascript&amp;t=Scope+in+JavaScript">Add to My Yahoo!</a></li><li class="newsvine"><a href="http://web.archive.org/web/20110725013125/http://www.newsvine.com/_tools/seed&amp;save?u=http://www.digital-web.com/articles/scope_in_javascript&amp;h=Scope+in+JavaScript">Add to Newsvine</a></li><li class="digg"><a href="http://web.archive.org/web/20110725013125/http://digg.com/submit?phase=2&amp;url=http%3A//www.digital-web.com/articles/scope_in_javascript&amp;title=Scope+in+JavaScript">Digg this story</a></li><li class="delicious"><a href="http://web.archive.org/web/20110725013125/http://del.icio.us/post?url=http://www.digital-web.com/articles/scope_in_javascript&amp;title=Scope+in+JavaScript" onclick="window.open(&#39;http://web.archive.org/web/20110725013125/http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=http://www.digital-web.com/articles/scope_in_javascript&amp;title=Scope in JavaScript&#39;, &#39;delicious&#39;,&#39;toolbar=no,width=700,height=400&#39;); return false;">Add to Del.icio.us</a></li>	</ul>
+
+	<p id="topics" style="margin-top: 0.75em;">
+		<strong>Related Topics</strong>: 
+		<a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/topics/scripting">Scripting</a>, <a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/topics/programming">Programming</a>	</p>
+	<div id="bio">
+					<div class="clearhak">&nbsp;</div>
+			<img src="./Digital Web Magazine - Scope in JavaScript_files/mike_west.jpg" width="100">
+			<p><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/about/staff/mike_west/">Mike West</a> abandoned suburban Texas' wide open plains in 2005 in favour of the Black Forest in Southern Germany where he currently lives and works.  His musings about the web are periodically posted to his personal website, <a href="http://web.archive.org/web/20110725013125/http://mikewest.org/">mikewest.org</a>.			</p>
+			</div>
+</div>
+
+
+<div id="footer">
+		<p class="banner ad"></p>
+	<p>Copyright © 1994-2011 <a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/about/copyright/">Digital Web Magazine</a>. All Rights Reserved.</p>
+</div>
+
+<ul id="globalNav">
+	<li id="articlesLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/">Home</a></li><li id="contactLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/contact/">Contact</a></li><li id="aboutLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/about/">About</a></li><li id="eventsLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/events/">Events</a></li></ul>
+
+<p style="position:absolute; right:23px; top:25px; z-index:100;"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/about/site/"><img src="./Digital Web Magazine - Scope in JavaScript_files/hostedby.gif" alt="Media Temple" width="117" height="14" border="0"></a></p>
+
+<ul id="sortNav">
+	<li id="topicLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/topics/">Articles by topic</a></li><li id="dateLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/dates/">Articles by date</a></li><li id="authorLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/authors/">Articles by author</a></li><li id="titleLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/titles/">Articles by title</a></li><li id="typeLink"><a href="http://web.archive.org/web/20110725013125/http://www.digital-web.com/types/">Articles by type</a></li>	<li class="search">
+		<!-- Google CSE Search Box Begins -->
+		  <form id="searchbox_012534339689088502956:645mphn3x04" action="http://web.archive.org/web/20110725013125/http://www.digital-web.com/search/">
+		  	<label for="searchTerms">Search</label>
+			<input name="q" type="text" id="searchTerms">
+			<input type="hidden" name="cx" value="012534339689088502956:645mphn3x04">
+			<input type="hidden" name="cof" value="FORID:9">
+			<input type="image" src="./Digital Web Magazine - Scope in JavaScript_files/go.gif" alt="GO!" id="searchSubmit">
+		  </form>
+		<!-- Google CSE Search Box Ends -->
+	</li>
+</ul>
+
+<div id="sideAds">
+	<!-- AdPacks.com Zone Code -->
+	<div id="bsap_1253161" class="bsap_1253161 bsap"></div>
+	<a href="http://web.archive.org/web/20110725013125/http://adpacks.com/" id="bsap_aplink">via Ad Packs</a>
+	<!-- End AdPacks.com Zone Code -->
+	
+	<div id="sbgoog">
+	</div>
+</div>
+	<script src="./Digital Web Magazine - Scope in JavaScript_files/urchin.js.下载" type="text/javascript"></script>
+	<script type="text/javascript">
+	_uacct = "UA-104641-1";
+	urchinTracker();
+	</script>
+	<script type="text/javascript">
+	var _sf_async_config={uid:1489,domain:"digital-web.com"};
+	(function(){
+	  function loadChartbeat() {
+	    window._sf_endpt=(new Date()).getTime();
+	    var e = document.createElement('script');
+	    e.setAttribute('language', 'javascript');
+	    e.setAttribute('type', 'text/javascript');
+	    e.setAttribute('src',
+	       (("https:" == document.location.protocol) ? "http://web.archive.org/web/20110725013125/https://s3.amazonaws.com/" : "http://") +
+	       "static.chartbeat.com/js/chartbeat.js");
+	    document.body.appendChild(e);
+	  }
+	  var oldonload = window.onload;
+	  window.onload = (typeof window.onload != 'function') ?
+	     loadChartbeat : function() { oldonload(); loadChartbeat(); };
+	})();
+
+	</script>
+
+<audio controls="controls" style="display: none;"></audio><script language="javascript" type="text/javascript" src="./Digital Web Magazine - Scope in JavaScript_files/chartbeat.js.下载"></script></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>

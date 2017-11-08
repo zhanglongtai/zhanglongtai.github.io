@@ -1,0 +1,63 @@
+var d = document;
+var winIE = (navigator.userAgent.indexOf("Opera")==-1 && (d.getElementById &&  d.documentElement.behaviorUrns))  ? true : false;
+
+/* add the Mozilla/Firefox search engine plugin to the browser */
+
+function addEngine() {
+
+ if ((typeof window.sidebar == 'object') && (typeof window.sidebar.addSearchEngine == 'function')) {
+
+  window.sidebar.addSearchEngine('http://web.archive.org/web/20110708232511/http://www.digital-web.com/search/digital-web.src', // engine URL
+                                 'http://web.archive.org/web/20110708232511/http://www.digital-web.com/search/digital-web.gif', // icon URL
+                                 'Digital Web Magazine',                              // engine name
+                                 'Web');                                              // category name
+  }
+  else alert('Mozilla/Firefox or Netscape 6+ is required to install this plugin.');
+
+} // addEngine()
+
+function bodySize(){
+	if(winIE && d.documentElement.clientWidth) {
+		sObj = d.getElementsByTagName("body")[0].style;
+		sObj.width = (d.documentElement.clientWidth<760) ? "760px" : "100%";
+	}
+}
+
+function getPullquote() {
+	var container =  d.getElementById("content");
+	var quote = container.getElementsByTagName("SPAN");
+	for(x=0;quote.length>x;x++){
+		if(quote[x].className == "pullquote") { 
+			writePullquote(container,quote[x]); 
+			break; 
+		}
+	}
+}
+
+function writePullquote(container,quote){
+	var blockquote = d.createElement("blockquote");
+	var pullquote = d.createElement("p");
+	var hole = container.getElementsByTagName("P")[5];
+	blockquote.className = "pullquote";
+	pullquote.className = "pullquote";
+	pullquote.appendChild(quote.cloneNode(true));
+	blockquote.appendChild(pullquote);
+	container.insertBefore(blockquote,hole);
+}
+
+function init(){
+	if(winIE) { bodySize(); }
+	if(d.getElementById && d.getElementById("article")) { getPullquote(); }
+}
+
+onload = init;
+
+if(winIE) { onresize = bodySize; }
+/*
+     FILE ARCHIVED ON 23:25:11 Jul 08, 2011 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 11:37:02 Nov 08, 2017.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
