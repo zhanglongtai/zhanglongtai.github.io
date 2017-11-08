@@ -1,0 +1,95 @@
+(function() {
+
+    var __hs_cta_json = {"css":"a#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2 {\n  -webkit-font-smoothing:antialiased; \n  cursor:pointer; \n  -moz-user-select:none; \n  -webkit-user-select:none; \n  -o-user-select:none; \n  user-select:none; \n  display:inline-block; \n  font-weight:normal; \n  text-align:center; \n  text-decoration:none; \n  font-family:sans-serif; \n  background:rgb(51,51,51); \n  color:rgb(104, 104, 104); \n  border-radius:3px; \n  border-width:0px; \n  transition:all .4s ease; \n  -moz-transition:all .4s ease; \n  -webkit-transition:all .4s ease; \n  -o-transition:all .4s ease; \n  text-shadow:none; \n  line-height:1.5em; \n  padding:20px 20px; \n}\na#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:hover {\nbackground:rgb(56,56,56); \ncolor:rgb(114,114,114); \n}\na#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:active, #cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:active:hover {\nbackground:rgb(40,40,40); \ncolor:rgb(99,99,99); \n}\n\na#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2 {\n  -webkit-font-smoothing:antialiased; \n  cursor:pointer; \n  -moz-user-select:none; \n  -webkit-user-select:none; \n  -o-user-select:none; \n  user-select:none; \n  display:inline-block; \n  font-weight:normal; \n  text-align:center; \n  text-decoration:none; \n  font-family:sans-serif; \n  background:rgb(51,51,51); \n  color:rgb(0, 145, 178); \n  border-radius:0px; \n  border-width:2px; \n  transition:all .4s ease; \n  -moz-transition:all .4s ease; \n  -webkit-transition:all .4s ease; \n  -o-transition:all .4s ease; \n  text-shadow:none; \n  line-height:1.5em; \n  padding:20px 20px; \n}\na#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:hover {\nbackground:rgb(91,91,91); \ncolor:rgb(0,70,79); \n}\na#cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:active, #cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2:active:hover {\nbackground:rgb(204,204,204); \ncolor:rgb(0,139,170); \n}\n","image_html":"<a id=\"cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2\" class=\"cta_button\" href=\"https://cta-service-cms2.hubspot.com/ctas/v2/public/cs/c/?cta_guid=194b5f6c-4b17-48ec-8fbf-a36ee40f92a2&placement_guid=d8ba3ca5-8634-4e35-a5a8-b1943eed1dbc&portal_id=424565&redirect_url=APefjpHlLa2K2o4nO4HF8Kpa7ctnWUuPwt1JLqi3IJUYWv2YRiXZkqFZXwwDiF-HO1-01l6v-TH1T4EWTCLMDFtWoxTmUdaRZPBBPFEAMsVCsF3jNwW3c0ee0hrKOPEjXfiPIKLagzRzW8JNuFu3Pq3ps5OAoqW8WXugZCBi03PaVdaCsQO8X1AXV1bqCCUUXr5kKfa-P_So-ltfymtrRIoOV6J6cbztKU6Wdbxv3OTqWHS4ffZSfng&hsutk=d45b5a16af22ee5c5ff044a5d9ff7889&canon=https%3A%2F%2Feng.paxos.com%2Fwhy-arent-distributed-systems-engineers-working-on-blockchain-technology&click=cdd61087-3aec-41ba-a873-061ec3cac30f\"  target=\"_blank\"  cta_dest_link=\"https://www.paxos.com/careers#jobs\"><img id=\"hs-cta-img-d8ba3ca5-8634-4e35-a5a8-b1943eed1dbc\" class=\"hs-cta-img \" style=\"border-width: 0px; /*hs-extra-styles*/\" mce_noresize=\"1\" alt=\"EXPLORE OPEN POSITIONS\" src=\"https://cdn2.hubspot.net/hubshot/17/01/12/89f6911f-1292-491e-9bb0-8189f22bf6c6.png\" /></a>","is_image":false,"placement_element_class":"hs-cta-d8ba3ca5-8634-4e35-a5a8-b1943eed1dbc","raw_html":"<a id=\"cta_button_424565_194b5f6c-4b17-48ec-8fbf-a36ee40f92a2\" class=\"cta_button \" href=\"https://cta-service-cms2.hubspot.com/ctas/v2/public/cs/c/?cta_guid=194b5f6c-4b17-48ec-8fbf-a36ee40f92a2&placement_guid=d8ba3ca5-8634-4e35-a5a8-b1943eed1dbc&portal_id=424565&redirect_url=APefjpHlLa2K2o4nO4HF8Kpa7ctnWUuPwt1JLqi3IJUYWv2YRiXZkqFZXwwDiF-HO1-01l6v-TH1T4EWTCLMDFtWoxTmUdaRZPBBPFEAMsVCsF3jNwW3c0ee0hrKOPEjXfiPIKLagzRzW8JNuFu3Pq3ps5OAoqW8WXugZCBi03PaVdaCsQO8X1AXV1bqCCUUXr5kKfa-P_So-ltfymtrRIoOV6J6cbztKU6Wdbxv3OTqWHS4ffZSfng&hsutk=d45b5a16af22ee5c5ff044a5d9ff7889&canon=https%3A%2F%2Feng.paxos.com%2Fwhy-arent-distributed-systems-engineers-working-on-blockchain-technology&click=cdd61087-3aec-41ba-a873-061ec3cac30f\" target=\"_blank\" style=\"/*hs-extra-styles*/\" cta_dest_link=\"https://www.paxos.com/careers#jobs\" title=\"EXPLORE OPEN POSITIONS\"><strong><span style=\"font-size: 18px;\"><span style=\"color: #ffffff;\">EXPLORE OPEN POSITIONS</span></span></strong></a>"};
+    var __hs_cta = {};
+
+    __hs_cta.drop = function() {
+        var is_legacy = document.getElementById('hs-cta-ie-element') && true || false,
+            html = __hs_cta_json.image_html,
+            tags = __hs_cta.getTags(),
+            is_image = __hs_cta_json.is_image,
+            parent, _style;
+
+        if (!is_legacy && !is_image) {
+            parent = (document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]);
+
+            _style = document.createElement('style');
+            parent.insertBefore(_style, parent.childNodes[0]);
+            try {
+                default_css = ".hs-cta-wrapper p, .hs-cta-wrapper div { margin: 0; padding: 0; }";
+                cta_css = default_css + " " + __hs_cta_json.css;
+                // http://blog.coderlab.us/2005/09/22/using-the-innertext-property-with-firefox/
+                _style[document.all ? 'innerText' : 'textContent'] = cta_css;
+            } catch (e) {
+                // addressing an ie9 issue
+                _style.styleSheet.cssText = cta_css;
+            }
+
+            html = __hs_cta_json.raw_html;
+        }
+
+        for (var i = 0; i < tags.length; ++i) {
+
+            var tag = tags[i];
+            var images = tag.getElementsByTagName('img');
+            var cssText = "";
+            var align = "";
+            for (var j = 0; j < images.length; j++) {
+                align = images[j].align;
+                images[j].style.border = '';
+                images[j].style.display = '';
+                cssText = images[j].style.cssText;
+            }
+
+            if (align == "right") {
+                tag.style.display = "block";
+                tag.style.textAlign = "right";
+            } else if (align == "middle") {
+                tag.style.display = "block";
+                tag.style.textAlign = "center";
+            }
+
+            tag.innerHTML = html.replace('/*hs-extra-styles*/', cssText);
+            tag.style.visibility = 'visible';
+            tag.setAttribute('data-hs-drop', 'true');
+            window.hbspt && hbspt.cta && hbspt.cta.afterLoad && hbspt.cta.afterLoad('d8ba3ca5-8634-4e35-a5a8-b1943eed1dbc');
+        }
+
+        return tags;
+    };
+
+    __hs_cta.getTags = function() {
+        var allTags, check, i, divTags, spanTags,
+            tags = [];
+            if (document.getElementsByClassName) {
+                allTags = document.getElementsByClassName(__hs_cta_json.placement_element_class);
+                check = function(ele) {
+                    return (ele.nodeName == 'DIV' || ele.nodeName == 'SPAN') && (!ele.getAttribute('data-hs-drop'));
+                };
+            } else {
+                allTags = [];
+                divTags = document.getElementsByTagName("div");
+                spanTags = document.getElementsByTagName("span");
+                for (i = 0; i < spanTags.length; i++) {
+                    allTags.push(spanTags[i]);
+                }
+                for (i = 0; i < divTags.length; i++) {
+                    allTags.push(divTags[i]);
+                }
+
+                check = function(ele) {
+                    return (ele.className.indexOf(__hs_cta_json.placement_element_class) > -1) && (!ele.getAttribute('data-hs-drop'));
+                };
+            }
+            for (i = 0; i < allTags.length; ++i) {
+                if (check(allTags[i])) {
+                    tags.push(allTags[i]);
+                }
+            }
+        return tags;
+    };
+
+    // need to do a slight timeout so IE has time to react
+    setTimeout(__hs_cta.drop, 10);
+
+}());
